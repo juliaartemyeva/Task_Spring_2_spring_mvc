@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.service.CarService;
 
+import java.util.ResourceBundle;
+
 @Controller
 @RequestMapping("/cars")
 public class CarController {
@@ -14,8 +16,8 @@ public class CarController {
     @GetMapping
     public String getCars(@RequestParam(name="locale", defaultValue = "en", required = false)String locale,  ModelMap model) {
         model.addAttribute("cars", new CarService().getAllCars());
-        model.addAttribute("locale", locale);
-        System.out.println(locale);
+        ResourceBundle bundle = ResourceBundle.getBundle("language_" + locale);
+        model.addAttribute("headline", bundle.getString("headline"));
         return "cars";
     }
 }
